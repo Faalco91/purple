@@ -11,9 +11,19 @@ jobs:
       - name: Checkout du repo
         uses: actions/checkout@v4
 
+      - name: Importer la clé GPG
+        run: |
+          echo "$GPG_PRIVATE_KEY" | gpg --import
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+
+      - name: Configurer Git pour utiliser la clé GPG
+        run: |
+          git config --global user.signingkey 22435F1DC655773FF8EF1AACD3E1540C7CA26520
+          git config --global commit.gpgSign true
+
       - name: Rendre le linter exécutable
         run: chmod +x scripts/pre-commit.sh
 
       - name: Exécuter le linter
         run: scripts/pre-commit.sh
-
