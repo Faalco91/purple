@@ -1,0 +1,19 @@
+name: Linter Check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du repo
+        uses: actions/checkout@v4
+
+      - name: Rendre le linter exécutable
+        run: chmod +x scripts/pre-commit.sh
+
+      - name: Exécuter le linter
+        run: scripts/pre-commit.sh
+
