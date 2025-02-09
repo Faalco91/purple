@@ -1,19 +1,13 @@
-#!/bin/sh
+#!/bin/bash
+echo "🔍 Vérification du code avec le linter..."
 
-# Affiche les informations du dernier commit pour le débogage
-echo "Informations du dernier commit :"
-git log -1 --pretty=full
+# Exécuter le linter (exemple avec ESLint pour du JS)
+npm run lint 
 
-# Vérifie si le dernier commit est signé et valide
-echo "Vérification de la signature du dernier commit..."
-SIGNATURE_STATUS=$(git log -1 --pretty=%G?)
-echo "Statut de la signature : $SIGNATURE_STATUS"
-
-if ! echo "$SIGNATURE_STATUS" | grep -q "G"; then
-    echo "❌ Erreur : Le commit n'est pas signé ou la signature n'est pas valide !"
-    echo "✅ Veuillez signer votre commit avec 'git commit -S -m \"message\"'."
+if [ $? -ne 0 ]; then
+    echo "❌ Erreur : le linter a détecté des problèmes. Corrige-les avant de committer."
     exit 1
 fi
 
-echo "✅ Commit signé et valide, vous pouvez pousser votre code."
+echo "✅ Linter passé avec succès !"
 exit 0
