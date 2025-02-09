@@ -7,5 +7,11 @@ if ! git log -1 --pretty=%G? | grep -q "G"; then
     exit 1
 fi
 
-echo "✅ Commit signé, vous pouvez pousser votre code."
+# Vérifie si la signature est valide
+if ! git log -1 --pretty=%G? | grep -q "G"; then
+    echo "❌ Erreur : La signature du commit n'est pas valide !"
+    exit 1
+fi
+
+echo "✅ Commit signé et valide, vous pouvez pousser votre code."
 exit 0
