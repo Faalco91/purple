@@ -13,9 +13,9 @@ jobs:
 
       - name: Importer la clé GPG
         run: |
-          echo "$GPG_PRIVATE_KEY" | gpg --import
+          echo "$GPG_PRIVATE_KEY_BASE64" | gpg --import
         env:
-          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PRIVATE_KEY_BASE64: ${{ secrets.GPG_PRIVATE_KEY_BASE64 }}
 
       - name: Configurer Git pour utiliser la clé GPG
         run: |
