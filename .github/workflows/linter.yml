@@ -11,9 +11,12 @@ jobs:
       - name: Checkout du repo
         uses: actions/checkout@v4
 
-      - name: Importer la clé GPG
+      - name: Configurer GPG
         run: |
-          echo "$GPG_PRIVATE_KEY" | gpg --import
+          mkdir -p ~/.gnupg
+          echo "use-agent" >> ~/.gnupg/gpg.conf
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import --batch --yes
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
 
